@@ -1,0 +1,55 @@
+model_params:
+  model: models.relaynet.relay_net
+  num_channels: 1
+  num_filters: 64
+  kernel_h: 7
+  kernel_w: 3
+  kernel_c: 1
+  stride_conv: 1
+  pool: 2
+  stride_pool: 2
+  num_class: 3
+  epochs: 6
+  batch_size: 4
+  patience: 2
+  checkpoint_path: "integrated.pt"
+  # TODO - Add Criterion flag
+  # We need to escape the quotes and the commas, AND don't use due to how snakemake handles these characters
+  # model_args: '{\"n_channels\":3\,\"n_classes\":3}'
+  # model_args: [n_channels:3,n_classes:3]
+
+data:
+  source_root_folder: msd_data/
+  train_path: msd_data/splitting_edited_train_edited_mini.csv
+  val_path: msd_data/splitting_edited_val_edited_mini.csv
+  test_path: msd_data/splitting_edited_test_edited_mini.csv
+  source_folder: msd_data
+  dest_folder: data_integrated
+  w1: 10
+  w2: 5
+  project_name: "msd"
+  run_date: "25112022"
+  run_id: "run_01"
+
+hyperparams:
+  epochs: 6
+  lr: 0.1
+
+optimizer: 
+  optim_type: "sgd"
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+
+scheduler:
+  sched_type: "steplr"
+  step_size:  30
+  gamma:  0.1
+
+analysis:
+  root_dir: "data_integrated"
+  state_dict_path: "integrated.pt"
+  batch_size: 4
+  shuffle: True
+  output_dir_name:  "results_integrated"
+ 

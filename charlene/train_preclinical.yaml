@@ -1,0 +1,21 @@
+param:
+    num_channels: 1
+    num_filters: 64
+    kernel_h: 7
+    kernel_w: 3
+    kernel_c: 1
+    stride_conv: 1
+    pool: 2
+    stride_pool: 2
+    num_class: 3
+    epochs: 6
+    
+filepaths:
+    mode: 'default'
+    processed_data_path: './processed/FL_Partition_Model_2'
+    exp_dir_name: "FL_Partition_Model_2"
+    model_path: "./models"
+    
+checkpoint:
+    choosen_checkpoint: NULL
+    

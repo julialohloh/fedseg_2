@@ -1,0 +1,72 @@
+####################
+# REQURIED MODULES #
+####################
+
+# Libs
+import torch
+import torch.nn.functional as F
+
+    ###################
+    #  CORE FUNCTIONS #
+    ###################
+
+def pixel_accuracy(y_pred: torch.tensor, y_true: torch.tensor) -> float:
+    """Compute pixel count accuracy between predicted and groundtruth
+
+    Args:
+        y_pred (torch.tensor): predicted mask from HRNET model
+        y_true (torch.tensor): ground truth mask
+
+    Returns:
+        accuracy score (float) 
+    """
+    with torch.no_grad():
+        correct = torch.eq(y_pred, y_true).int()
+        accuracy = float(correct.sum()) / float(correct.numel())
+    return accuracy
+
+
+
+# def DICE(y_pred: torch.tensor, y_true: torch.tensor) -> float:
+#     """Compute Sorensen Dice coefficient score between predicted and groundtruth
+
+#     Args:
+#         y_pred (torch.tensor): predicted mask from HRNET model
+#         y_true (torch.tensor): ground truth mask
+
+#     Returns:
+#         DSC score (float) 
+#     """
+#     intersect = torch.sum(y_pred*y_true)
+#     dice = (2 * intersect ) / torch.sum(y_pred + y_true)
+#     dice = torch.mean(dice)
+#     # dice = round(dice, 3) # for easy reading
+#     return dice    
+
+def multiDICE(y_pred: torch.tensor, y_true: torch.tensor, num_classes) -> tuple[torch.Tensor, torch.Tensor]:
+    """Compute multiclass Sorensen Dice coefficient score between predicted and groundtruth
+
+    Args:
+        y_pred (torch.tensor): predicted mask from HRNET model
+        y_true (torch.tensor): ground truth mask
+
+    Returns:
+        DSC score (float) 
+    """
+    # dice = torch.mean(dice)
+
+    if num_classes <= 0:
+        raise ValueError("num_classes must be more than zero")
+
+    if y_pred.shape != y_true.shape:
+        raise ValueError("outputs and labels should be of the same shape")
+
+    dice_score = []
+    for num in range(0, num_classes):
+        intersection = ((y_pred == num) * (y_true == num)).sum()
+        dice_sum = ((y_pred == num).sum() + (y_true == num).sum())
+        if dice_sum == 0:
+            dice_score.append(float("nan"))
+        else:
+            dice_score.append((2 * intersection)/dice_sum)
+    return torch.tensor(dice_score),torch.nanmean(torch.tensor(dice_score))

@@ -1,0 +1,20 @@
+general:
+    layers_mapping:
+        0: 'UpperBG'
+        1: 'Total Retina'
+        2: 'LowerBG'
+    get_image_quality: False
+    
+filepaths:
+    label_path: '../20220715_final_oct_synergos/Segmentations'
+    image_path: '../20220715_final_oct_synergos/Data'
+    test_dataset: './processed/FL_Partition_Model_2/test_dataset.txt'
+    model_path: './models/FL_Partition_Model_2/relaynet_epoch4.model'
+    image_ext: '.tif'
+    filetype: 'image'
+    
+save_filepaths:
+    predictions_path: './results/Partition_2_Predictions'
+    evaluations_path: './results/Partition_2_Results'
+    image_quality_path: './results/Partition_2_image_quality'
+    results_name: 'Partition 2 FL evaluation NoBackground'

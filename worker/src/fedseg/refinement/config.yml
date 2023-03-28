@@ -1,0 +1,12 @@
+# RUN_NAME: 'HRNet'
+EPOCHS: 1
+LEARNING_RATE : 0.002
+# DATA_PATH : 'input/sanitycheck/'
+# IMAGE_PATH : 'image/'
+# MASK_PATH : 'predicted/'
+# GT_PATH : 'groundtruth/'
+SAVE_PATH : 'worker/outputs/'
+RANDOM_SEED : 42
+VALID_RATIO : 0.1
+TRAIN_RATIO : 0.8
+# BATCH_SIZE : 4

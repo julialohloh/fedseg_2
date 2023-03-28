@@ -1,0 +1,9 @@
+general:
+    mode: NULL
+    sliding_window: 64
+    
+filepaths:
+    label_path: '../20220715_final_oct_synergos/Segmentations'
+    image_path: '../20220715_final_oct_synergos/Data'
+    processed_path: './processed'
+    image_ext: '.tif'
